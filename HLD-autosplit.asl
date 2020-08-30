@@ -20,6 +20,8 @@ startup {
 	settings.SetToolTip("Warps", "Split when warping back to town");
 	settings.Add("Alt Drifter", false);
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
+	settings.Add("Rooms", false);
+	settings.SetToolTip("Rooms", "Split on every room transition");
 }
 
 init {
@@ -49,6 +51,10 @@ start {
 
 split {
 	if (current.room != old.room) {
+
+		if (settings["Rooms"]) {
+			return true;
+		}
 
 		if (current.room == 61 && old.room > 80) {
 			/* warping to town */
