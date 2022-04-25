@@ -22,7 +22,7 @@ startup {
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
 	settings.Add("Rooms", false);
 	settings.SetToolTip("Rooms", "Split on every room transition");
-	setting.Add("MRE", false);
+	settings.Add("MRE", false);
 	settings.SetToolTip("MRE", "Split on entering the monolith room from the front");
 }
 
@@ -74,6 +74,7 @@ split {
 
 		if (current.room == 53 && old.room == 50) {
 			/* entered monolith room from front */
+			return true;
 			if (settings["MRE"]) {
 				return true;
 			}
