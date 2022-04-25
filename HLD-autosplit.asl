@@ -23,7 +23,9 @@ startup {
 	settings.Add("Rooms", false);
 	settings.SetToolTip("Rooms", "Split on every room transition");
 	settings.Add("MRE", false);
-	settings.SetToolTip("MRE", "Split on entering the monolith room from the front");
+	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
+
+	vars.mre = false;
 }
 
 init {
@@ -72,10 +74,10 @@ split {
 			}
 		}
 
-		if (current.room == 53 && old.room == 50) {
-			/* entered monolith room from front */
-			return true;
-			if (settings["MRE"]) {
+		if (current.room == 53) {
+			/* entered monolith room */
+			if (settings["MRE"] && !vars.mre) {
+				vars.mre = true;
 				return true;
 			}
 		}
