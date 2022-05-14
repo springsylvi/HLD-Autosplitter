@@ -17,7 +17,17 @@ state("HyperLightDrifter", "4/1/2016") {
 
 startup {
 	settings.Add("Warps", false);
-	settings.SetToolTip("Warps", "Split when warping back to town");
+	settings.SetToolTip("Warps", "Split when warping to an area from outside that area");
+	settings.Add("warptown", false, "Warp Town", "Warps");
+	settings.SetToolTip("warptown", "Split when warping to town");
+	settings.Add("warpeast", false, "Warp East", "Warps");
+	settings.SetToolTip("warpeast", "Split when warping east");
+	settings.Add("warpnorth", false, "Warp North", "Warps");
+	settings.SetToolTip("warpnorth", "Split when warping north");
+	settings.Add("warpwest", false, "Warp West", "Warps");
+	settings.SetToolTip("warpwest", "Split when warping west");
+	settings.Add("warpsouth", false, "Warp South", "Warps");
+	settings.SetToolTip("warpsouth", "Split when warping south");
 	settings.Add("Alt Drifter", false);
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
 	settings.Add("Rooms", false);
@@ -25,8 +35,6 @@ startup {
 	settings.Add("Transitions", false);
 	settings.Add("MRE", false, "MRE", "Transitions");
 	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
-	settings.Add("warpnorth", false, "Warp North", "Transitions");
-	settings.SetToolTip("warpnorth", "Split when warping north");
 	settings.Add("westmodules", false, "West Module Transitions");
 	settings.Add("prisonvault", false, "Prison Vault Exit", "westmodules");
 	settings.SetToolTip("prisonvault", "Split when leaving PrisonHALVAULT");
@@ -93,11 +101,20 @@ split {
 		}
 
 
-		if (current.room == 61 && old.room > 80) {
-			/* warping to town */
-			if (settings["Warps"]) {
-				return true;
-			}
+		if (current.room == 61 && (old.room < 60 || old.room > 80)) {
+			if (settings["warptown"]) return true;
+		}
+		if (current.room == 175 && (old.room < 172 || old.room > 200)) {
+			if (settings["warpeast"]) return true;
+		}
+		if (current.room == 94 && (old.room < 93 || old.room > 124)) {
+			if (settings["warpnorth"]) return true;
+		}
+		if (current.room == 219 && (old.room < 218 || old.room > 253)) {
+			if (settings["warpwest"]) return true;
+		}
+		if (current.room == 130 && (old.room < 128 || old.room > 165)) {
+			if (settings["warpsouth"]) return true;
 		}
 
 
@@ -116,10 +133,7 @@ split {
 				return true;
 			}
 		}
-		if (current.room == 94 && (old.room < 93 || old.room > 124)) {
-			/* warped to north */
-			if (settings["warpnorth"]) return true;
-		}		
+				
 
 		if (settings["prisonvault"]) {
 			if (old.room == (r = vars.modulerooms["prisonvault"]) && current.room != r) return true;
