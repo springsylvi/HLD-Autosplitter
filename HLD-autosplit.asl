@@ -22,10 +22,40 @@ startup {
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
 	settings.Add("Rooms", false);
 	settings.SetToolTip("Rooms", "Split on every room transition");
-	settings.Add("MRE", false);
+	settings.Add("Transitions", false);
+	settings.Add("MRE", false, "MRE", "Transitions");
 	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
+	settings.Add("warpnorth", false, "Warp North", "Transitions");
+	settings.SetToolTip("warpnorth", "Split when warping north");
+	settings.Add("westmodules", false, "West Module Transitions");
+	settings.Add("prisonvault", false, "Prison Vault Exit", "westmodules");
+	settings.SetToolTip("prisonvault", "Split when leaving PrisonHALVAULT");
+	settings.Add("thewood", false, "The Wood Exit", "westmodules");
+	settings.SetToolTip("thewood", "Split when leaving TheWood");
+	settings.Add("meadowood", false, "Dog Module Exit", "westmodules");
+	settings.SetToolTip("meadowood", "Split when leaving MeadowoodCorner");
+	settings.Add("cliffsidecells", false, "Cliffside Cells Exit", "westmodules");
+	settings.SetToolTip("cliffsidecells", "Split when leaving CliffsideCellsRedux");
+	settings.Add("prisonhall", false, "Prison Hall Exit", "westmodules");
+	settings.SetToolTip("prisonhall", "Split when leaving PrisonHallEnd");
+	settings.Add("thinforest", false, "Icex Module Exit", "westmodules");
+	settings.SetToolTip("thinforest", "Split when leaving ThinForestLowSecret");
+	settings.Add("meadowvault", false, "Meadow Vault Exit", "westmodules");
+	settings.SetToolTip("meadowvault", "Split when leaving BigMeadowVault");
+	settings.Add("tanukitrouble", false, "Tanuki Trouble Exit", "westmodules");
+	settings.SetToolTip("tanukitrouble", "Split when leaving TanukiTrouble");
 
 	vars.mre = false;
+	vars.modulerooms = new Dictionary<string, int>() {
+		{"prisonvault", 210},
+		{"thewood", 218},
+		{"meadowood", 220},
+		{"cliffsidecells", 226},
+		{"prisonhall", 233},
+		{"thinforest", 235},
+		{"meadowvault", 240},
+		{"tanukitrouble", 243}
+	};
 }
 
 init {
@@ -56,9 +86,12 @@ start {
 split {
 	if (current.room != old.room) {
 
+		int r;
+
 		if (settings["Rooms"]) {
 			return true;
 		}
+
 
 		if (current.room == 61 && old.room > 80) {
 			/* warping to town */
@@ -67,6 +100,7 @@ split {
 			}
 		}
 
+
 		if (current.room == 8 && old.room == 262) {
 			/* start of credits */
 			if (settings["Alt Drifter"]) {
@@ -74,12 +108,42 @@ split {
 			}
 		}
 
+
 		if (current.room == 53) {
 			/* entered monolith room */
 			if (settings["MRE"] && !vars.mre) {
 				vars.mre = true;
 				return true;
 			}
+		}
+		if (current.room == 94 && (old.room < 93 || old.room > 124)) {
+			/* warped to north */
+			if (settings["warpnorth"]) return true;
+		}		
+
+		if (settings["prisonvault"]) {
+			if (old.room == (r = vars.modulerooms["prisonvault"]) && current.room != r) return true;
+		}
+		if (settings["thewood"]) {
+			if (old.room == (r = vars.modulerooms["thewood"]) && current.room != r) return true;
+		}
+		if (settings["meadowood"]) {
+			if (old.room == (r = vars.modulerooms["meadowood"]) && current.room != r) return true;
+		}
+		if (settings["cliffsidecells"]) {
+			if (old.room == (r = vars.modulerooms["cliffsidecells"]) && current.room != r) return true;
+		}
+		if (settings["prisonhall"]) {
+			if (old.room == (r = vars.modulerooms["prisonhall"]) && current.room != r) return true;
+		}
+		if (settings["thinforest"]) {
+			if (old.room == (r = vars.modulerooms["thinforest"]) && current.room != r) return true;
+		}
+		if (settings["meadowvault"]) {
+			if (old.room == (r = vars.modulerooms["meadowvault"]) && current.room != r) return true;
+		}
+		if (settings["tanukitrouble"]) {
+			if (old.room == (r = vars.modulerooms["tanukitrouble"]) && current.room != r) return true;
 		}
 	}
 }
