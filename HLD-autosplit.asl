@@ -28,6 +28,7 @@ startup {
 	settings.SetToolTip("warpwest", "Split when warping west");
 	settings.Add("warpsouth", false, "Warp South", "Warps");
 	settings.SetToolTip("warpsouth", "Split when warping south");
+
 	settings.Add("Alt Drifter", false);
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
 	settings.Add("Rooms", false);
@@ -35,6 +36,39 @@ startup {
 	settings.Add("Transitions", false);
 	settings.Add("MRE", false, "MRE", "Transitions");
 	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
+
+	settings.Add("eastmodules", false, "East Module Transitions");
+	settings.Add("watertunnel", false, "Water Tunnel Exit", "eastmodules");
+	settings.SetToolTip("watertunnel", "Split when leaving WaterTunnelLAB");
+	settings.Add("megahuge", false, "Megahuge Lab Exit", "eastmodules");
+	settings.SetToolTip("megahuge", "Split when leaving MegaHugeLAB");
+	settings.Add("flamepit", false, "Flamepit Lab Exit", "eastmodules");
+	settings.SetToolTip("flamepit", "Split when leaving FlamePitLAB");
+	settings.Add("bigbog", false, "Bigbog Lab Exit", "eastmodules");
+	settings.SetToolTip("bigbog", "Split when leaving BigBogLab");
+	settings.Add("dockslab", false, "Docks Lab Exit", "eastmodules");
+	settings.SetToolTip("dockslab", "Split when leaving DocksLab");
+	settings.Add("frogarena", false, "Frog Arena Exit", "eastmodules");
+	settings.SetToolTip("frogarena", "Split when leaving FrogArena");
+	settings.Add("eastloop", false, "East Loop Exit", "eastmodules");
+	settings.SetToolTip("eastloop", "Split when leaving EastLoop");
+
+	settings.Add("northmodules", false, "North Module Transitions");
+	settings.Add("northhall", false, "Dark Room Exit", "northmodules");
+	settings.SetToolTip("northhall", "Split when leaving NorthHall");
+	settings.Add("shrinevault", false, "Shrine Path Vault Exit", "northmodules");
+	settings.SetToolTip("shrinevault", "Split when leaving ShrinePath2VAULT");
+	settings.Add("birds", false, "Birds Module Exit", "northmodules");
+	settings.SetToolTip("birds", "Split when leaving StairAscent");
+	settings.Add("crusharena", false, "Crush Arena Exit", "northmodules");
+	settings.SetToolTip("crusharena", "Split when leaving CrushArena");
+	settings.Add("dropspiral", false, "Drop Spiral Exit", "northmodules");
+	settings.SetToolTip("dropspiral", "Split when leaving DropSpiralOpen");
+	settings.Add("droparena", false, "Drop Arena Exit", "northmodules");
+	settings.SetToolTip("droparena", "Split when leaving DropArena");
+	settings.Add("altar", false, "Cathedral Arena Exit", "northmodules");
+	settings.SetToolTip("altar", "Split when leaving AltarThrone");
+
 	settings.Add("westmodules", false, "West Module Transitions");
 	settings.Add("prisonvault", false, "Prison Vault Exit", "westmodules");
 	settings.SetToolTip("prisonvault", "Split when leaving PrisonHALVAULT");
@@ -53,8 +87,38 @@ startup {
 	settings.Add("tanukitrouble", false, "Tanuki Trouble Exit", "westmodules");
 	settings.SetToolTip("tanukitrouble", "Split when leaving TanukiTrouble");
 
+	settings.Add("southmodules", false, "South Module Transitions");
+	settings.Add("bigone", false, "Big One Exit", "southmodules");
+	settings.SetToolTip("bigone", "Split when leaving TABigOne");
+	settings.Add("gateblock", false, "Gate Block Exit", "southmodules");
+	settings.SetToolTip("gateblock", "Split when leaving CGateBlock");
+	settings.Add("endhall", false, "Baker Module Exit", "southmodules");
+	settings.SetToolTip("endhall", "Split when leaving CEndHall");
+	settings.Add("linkup", false, "Gauntlet Linkup Exit", "southmodules");
+	settings.SetToolTip("linkup", "Split when leaving GauntletLinkup");
+	settings.Add("pillarbird", false, "Charles Room Exit", "southmodules");
+	settings.SetToolTip("pillarbird", "Split when leaving APillarBird");
+	settings.Add("cspiral", false, "CSpiral Exit", "southmodules");
+	settings.SetToolTip("cspiral", "Split when leaving CSpiral");
+	settings.Add("dashmodule", false, "Dash Challenge Exit", "southmodules");
+	settings.SetToolTip("dashmodule", "Split when leaving Gauntlet_Elevator");
+
 	vars.mre = false;
 	vars.modulerooms = new Dictionary<string, int>() {
+		{"watertunnel", 174},
+		{"megahuge", 181},
+		{"flamepit", 183},
+		{"bigbog", 193},
+		{"dockslab", 188},
+		{"frogarena", 191},
+		{"eastloop", 198},
+		{"northhall", 86},
+		{"shrinevault", 91},
+		{"birds", 123},
+		{"crusharena", 124},
+		{"dropspiral", 106},
+		{"droparena", 109},
+		{"altar", 118},
 		{"prisonvault", 210},
 		{"thewood", 218},
 		{"meadowood", 220},
@@ -62,7 +126,14 @@ startup {
 		{"prisonhall", 233},
 		{"thinforest", 235},
 		{"meadowvault", 240},
-		{"tanukitrouble", 243}
+		{"tanukitrouble", 243},
+		{"bigone", 139},
+		{"gateblock", 140},
+		{"endhall", 144},
+		{"linkup", 158},
+		{"pillarbird", 160},
+		{"cspiral", 161},
+		{"dashmodule", 132}
 	};
 }
 
@@ -134,30 +205,9 @@ split {
 			}
 		}
 				
-
-		if (settings["prisonvault"]) {
-			if (old.room == (r = vars.modulerooms["prisonvault"]) && current.room != r) return true;
-		}
-		if (settings["thewood"]) {
-			if (old.room == (r = vars.modulerooms["thewood"]) && current.room != r) return true;
-		}
-		if (settings["meadowood"]) {
-			if (old.room == (r = vars.modulerooms["meadowood"]) && current.room != r) return true;
-		}
-		if (settings["cliffsidecells"]) {
-			if (old.room == (r = vars.modulerooms["cliffsidecells"]) && current.room != r) return true;
-		}
-		if (settings["prisonhall"]) {
-			if (old.room == (r = vars.modulerooms["prisonhall"]) && current.room != r) return true;
-		}
-		if (settings["thinforest"]) {
-			if (old.room == (r = vars.modulerooms["thinforest"]) && current.room != r) return true;
-		}
-		if (settings["meadowvault"]) {
-			if (old.room == (r = vars.modulerooms["meadowvault"]) && current.room != r) return true;
-		}
-		if (settings["tanukitrouble"]) {
-			if (old.room == (r = vars.modulerooms["tanukitrouble"]) && current.room != r) return true;
+		
+		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
+			if (settings[pair.Key] && old.room == pair.Value && current.room != pair.Value) return true;
 		}
 	}
 }
