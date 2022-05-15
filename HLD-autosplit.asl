@@ -2,18 +2,38 @@ state("HyperLightDrifter", "7/21/2017") {
 	/* latest Steam patch */
 	uint room : 0x255B1F10;
 	double isLoading : 0x255A7E24, 0x0, 0x0, 0x10, 0x0, 0xC, 0x28, 0x370;
+	uint moduleCount : 0x255B2648, 0xA5C, 0x18, 0x24;
+	uint gameState : 0x255A7E0C, 0xAC, 0xC, 0xC;
 }
 
 state("HyperLightDrifter", "2/7/2019") {
 	/* current patch */
 	uint room : 0x255C60C0;
 	double isLoading : 0x255BBFD4, 0x0, 0x0, 0x10, 0x0, 0xC, 0x28, 0x370;
+	uint moduleCount : 0x255C67F8, 0xA5C, 0x18, 0x24;
+	uint gameState : 0x255BBFBC, 0xAC, 0xC, 0xC;
 }
 
 state("HyperLightDrifter", "4/1/2016") {
 	/* release patch */
 	uint room : 0x2564C318;
 }
+
+
+init {
+
+	if (modules.First().ModuleMemorySize == 631357440) {
+		version = "7/21/2017";
+	} else if (modules.First().ModuleMemorySize == 629932032) {
+		version = "2/7/2019";
+	} else if (modules.First().ModuleMemorySize == 631992320) {
+		version = "4/1/2016";
+	} else {
+		version = "unknown";
+		print("module size = " + modules.First().ModuleMemorySize.ToString());
+	}
+}
+
 
 startup {
 	settings.Add("Warps", false);
@@ -137,30 +157,11 @@ startup {
 	};
 }
 
-init {
-
-	if (modules.First().ModuleMemorySize == 631357440) {
-		version = "7/21/2017";
-	} else if (modules.First().ModuleMemorySize == 629932032) {
-		version = "2/7/2019";
-	} else if (modules.First().ModuleMemorySize == 631992320) {
-		version = "4/1/2016";
-	} else {
-		version = "unknown";
-		print("module size = " + modules.First().ModuleMemorySize.ToString());
-	}
-}
-
-/*
-no path for newGame var?
 
 start {
-	if (current.newGame == 1 && old.newGame == 0) {
-		return true;
-	}
-	return false;
+	if (current.gameState == 5 && old.gameState == 0) return true;
 }
-*/
+
 
 split {
 	if (current.room != old.room) {
