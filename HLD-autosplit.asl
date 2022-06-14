@@ -56,6 +56,8 @@ startup {
 	settings.Add("Transitions", false);
 	settings.Add("MRE", false, "MRE", "Transitions");
 	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
+	settings.Add("lab", false, "Lab Elevator", "Transitions");
+	settings.SetToolTip("lab", "Split when using the elevator after MeltyMashArena");
 
 	settings.Add("eastmodules", false, "East Module Transitions");
 	settings.Add("watertunnel", false, "Water Tunnel Exit", "eastmodules");
@@ -122,6 +124,10 @@ startup {
 	settings.SetToolTip("cspiral", "Split when leaving CSpiral");
 	settings.Add("dashmodule", false, "Dash Challenge Exit", "southmodules");
 	settings.SetToolTip("dashmodule", "Split when leaving Gauntlet_Elevator");
+
+	settings.Add("pillars", false, "Pillar Transitions");
+	settings.Add("westpillar", false, "West Pillar Exit", "pillars");
+	settings.SetToolTip("westpillar", "Split when leaving TowerEnter");
 
 	vars.mre = false;
 	vars.modulerooms = new Dictionary<string, int>() {
@@ -205,10 +211,21 @@ split {
 				return true;
 			}
 		}
+		if (current.room == 79 && old.room == 184) {
+			/* took elevator in flameelevatorexit */
+			if (settings["lab"]) {
+				return true;
+			}
+		}
 				
 		
 		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
 			if (settings[pair.Key] && old.room == pair.Value && current.room != pair.Value) return true;
+		}
+
+
+		if (old.room == 246 && current.room != 246) {
+			if (settings["westpillar"]) return true;
 		}
 	}
 }
