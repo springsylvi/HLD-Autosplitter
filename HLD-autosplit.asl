@@ -141,7 +141,7 @@ startup {
 		{"northhall", 86},
 		{"shrinevault", 91},
 		{"birds", 123},
-		{"crusharena", 124},
+		{"crusharena", 104},
 		{"dropspiral", 106},
 		{"droparena", 109},
 		{"altar", 118},
