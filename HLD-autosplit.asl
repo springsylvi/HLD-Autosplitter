@@ -58,6 +58,8 @@ startup {
 	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
 	settings.Add("lab", false, "Lab Elevator", "Transitions");
 	settings.SetToolTip("lab", "Split when using the elevator after MeltyMashArena");
+	settings.Add("altarquit", false, "AltarThrone Quitout", "Transitions");
+	settings.SetToolTip("altarquit", "Split when quitting to menu from AltarThrone");
 
 	settings.Add("eastmodules", false, "East Module Transitions");
 	settings.Add("watertunnel", false, "Water Tunnel Exit", "eastmodules");
@@ -211,16 +213,24 @@ split {
 				return true;
 			}
 		}
+
+		/* lab elevator */
 		if (current.room == 79 && old.room == 184) {
-			/* took elevator in flameelevatorexit */
 			if (settings["lab"]) {
 				return true;
 			}
 		}
+
+		/* altarthrone quitout */
+		if (current.room == 5 && old.room == 118) {
+			if (settings["altarquit"]) {
+				return true;
+			}
+		}
 				
-		
+		/* module transitions */
 		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
-			if (settings[pair.Key] && old.room == pair.Value && current.room != pair.Value) return true;
+			if (settings[pair.Key] && old.room == pair.Value && current.room != pair.Value && current.room != 5) return true;
 		}
 
 
