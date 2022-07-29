@@ -4,6 +4,8 @@ state("HyperLightDrifter", "7/21/2017") {
 	double isLoading : 0x255A7E24, 0x0, 0x0, 0x10, 0x0, 0xC, 0x28, 0x370;
 	uint moduleCount : 0x255B2648, 0xA5C, 0x18, 0x24;
 	uint gameState : 0x255A7E0C, 0xAC, 0xC, 0xC;
+	uint hordeEnd : 0x255B2648, 0xA60, 0x18, 0x24;
+	uint isPaused : 0x255AF150, 0x0, 0x144, 0x3C, 0xD8;
 }
 
 state("HyperLightDrifter", "2/7/2019") {
@@ -12,6 +14,8 @@ state("HyperLightDrifter", "2/7/2019") {
 	double isLoading : 0x255BBFD4, 0x0, 0x0, 0x10, 0x0, 0xC, 0x28, 0x370;
 	uint moduleCount : 0x255C67F8, 0xA5C, 0x18, 0x24;
 	uint gameState : 0x255BBFBC, 0xAC, 0xC, 0xC;
+	uint hordeEnd : 0x255C67F8, 0xA60, 0x18, 0x24;
+	uint isPaused : 0x255C3300, 0x0, 0x144, 0x3C, 0xD8;
 }
 
 state("HyperLightDrifter", "4/1/2016") {
@@ -19,6 +23,15 @@ state("HyperLightDrifter", "4/1/2016") {
 	uint room : 0x2564C318;
 }
 
+state("HyperLightDrifter", "6/26/2017") {
+	/* controller test patch */
+	uint room : 0x00C3CA38, 0x0; /* DONE */
+	double isLoading : 0x25504848, 0x34, 0x10, 0x10, 0x440;
+	uint moduleCount : 0x25515990, 0xA5C, 0x18, 0x24;
+	uint gameState : 0x2550CC04, 0xAC, 0xC, 0xC;
+	uint hordeEnd : 0x25515990, 0xA60, 0x18, 0x24;
+	uint isPaused : 0x255125B8, 0x0, 0x144, 0x3C, 0xC8;
+}
 
 init {
 
@@ -51,6 +64,8 @@ startup {
 
 	settings.Add("Alt Drifter", false);
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
+	settings.Add("horde", false, "Horde Complete");
+	settings.SetToolTip("horde", "Split on beating the 10th wave in any horde mode arena");
 	settings.Add("Rooms", false);
 	settings.SetToolTip("Rooms", "Split on every room transition");
 	settings.Add("Transitions", false);
@@ -172,6 +187,12 @@ start {
 
 
 split {
+
+	/* horde mode */
+	if (current.room >= 73 && current.room <= 77 && current.hordeEnd == 1 && old.hordeEnd == 0 && current.isPaused == 0) {
+		if (settings["horde"]) return true;
+	}
+
 	if (current.room != old.room) {
 
 		int r;
@@ -233,7 +254,7 @@ split {
 			if (settings[pair.Key] && old.room == pair.Value && current.room != pair.Value && current.room != 5) return true;
 		}
 
-
+		/* west pillar */
 		if (old.room == 246 && current.room != 246) {
 			if (settings["westpillar"]) return true;
 		}
