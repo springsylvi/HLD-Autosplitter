@@ -41,6 +41,8 @@ init {
 		version = "2/7/2019";
 	} else if (modules.First().ModuleMemorySize == 631992320) {
 		version = "4/1/2016";
+	} else if (modules.First().ModuleMemorySize == 630644736) {
+		version = "6/26/2017";
 	} else {
 		version = "unknown";
 		print("module size = " + modules.First().ModuleMemorySize.ToString());
@@ -263,7 +265,7 @@ split {
 
 isLoading {
 
-	if (version != "7/21/2017" && version != "2/7/2019") {
+	if (version != "7/21/2017" && version != "2/7/2019" && version != "6/26/2017") {
 		return false;
 	}
 
