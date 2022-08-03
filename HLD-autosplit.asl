@@ -64,6 +64,12 @@ startup {
 	settings.Add("warpsouth", false, "Warp South", "Warps");
 	settings.SetToolTip("warpsouth", "Split when warping south");
 
+	settings.Add("start", false, "Start");
+	settings.Add("ngstart", false, "File Creation", "start");
+	settings.SetToolTip("ngstart", "Start the timer on creating a new file (any mode, including boss rush)");
+	settings.Add("hordestart", false, "Horde Start", "start");
+	settings.SetToolTip("hordestart", "Start the timer on entering any horde arena");
+
 	settings.Add("Alt Drifter", false);
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
 	settings.Add("horde", false, "Horde Complete");
@@ -184,7 +190,9 @@ startup {
 
 
 start {
-	if (current.gameState == 5 && old.gameState == 0) return true;
+	if (current.gameState == 5 && old.gameState == 0 && settings["ngstart"]) return true;
+
+	if (current.room >= 73 && current.room <= 77 && old.room != current.room && settings["hordestart"]) return true;
 }
 
 
