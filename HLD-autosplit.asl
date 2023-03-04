@@ -77,6 +77,8 @@ startup {
 	settings.Add("Rooms", false);
 	settings.SetToolTip("Rooms", "Split on every room transition");
 	settings.Add("Transitions", false);
+	settings.Add("intro", false, "Intro Done", "Transitions");
+	settings.SetToolTip("intro", "Split when completing the intro area");
 	settings.Add("MRE", false, "MRE", "Transitions");
 	settings.SetToolTip("MRE", "Split on entering the monolith room for the first time");
 	settings.Add("lab", false, "Lab Elevator", "Transitions");
@@ -241,6 +243,13 @@ split {
 			/* entered monolith room */
 			if (settings["MRE"] && !vars.mre) {
 				vars.mre = true;
+				return true;
+			}
+		}
+
+		/* intro done */
+		if (current.room == 51 && old.room == 50) {
+			if (settings["intro"]) {
 				return true;
 			}
 		}
