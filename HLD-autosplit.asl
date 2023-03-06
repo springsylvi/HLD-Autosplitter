@@ -1,5 +1,5 @@
 state("HyperLightDrifter", "7/21/2017") {
-	/* latest Steam patch */
+	/* optimal steam patch */
 	uint room : 0x255B1F10;
 	double isLoading : 0x255A7E24, 0x0, 0x0, 0x10, 0x0, 0xC, 0x28, 0x370;
 	uint moduleCount : 0x255B2648, 0xA5C, 0x18, 0x24;
@@ -9,7 +9,7 @@ state("HyperLightDrifter", "7/21/2017") {
 }
 
 state("HyperLightDrifter", "2/7/2019") {
-	/* current patch */
+	/* optimal gog patch */
 	uint room : 0x255C60C0;
 	double isLoading : 0x255BBFD4, 0x0, 0x0, 0x10, 0x0, 0xC, 0x28, 0x370;
 	uint moduleCount : 0x255C67F8, 0xA5C, 0x18, 0x24;
@@ -25,7 +25,7 @@ state("HyperLightDrifter", "4/1/2016") {
 
 state("HyperLightDrifter", "6/26/2017") {
 	/* controller test patch */
-	uint room : 0x00C3CA38, 0x0; /* DONE */
+	uint room : 0x00C3CA38, 0x0;
 	double isLoading : 0x25504848, 0x34, 0x10, 0x10, 0x440;
 	uint moduleCount : 0x25515990, 0xA5C, 0x18, 0x24;
 	uint gameState : 0x2550CC04, 0xAC, 0xC, 0xC;
@@ -85,6 +85,9 @@ startup {
 	settings.SetToolTip("lab", "Split when using the elevator after MeltyMashArena");
 	settings.Add("altarquit", false, "AltarThrone Quitout", "Transitions");
 	settings.SetToolTip("altarquit", "Split when quitting to menu from AltarThrone");
+
+	settings.Add("allmodules", false, "Modules");
+	settings.SetToolTip("allmodules", "Split when activating any module");
 
 	settings.Add("eastmodules", false, "East Module Transitions");
 	settings.Add("watertunnel", false, "Water Tunnel Exit", "eastmodules");
@@ -204,6 +207,10 @@ split {
 	if (current.room >= 73 && current.room <= 77 && current.hordeEnd == 1 && old.hordeEnd == 0 && current.isPaused == 0) {
 		if (settings["horde"]) return true;
 	}
+
+	if (current.moduleCount != old.moduleCount && current.moduleCount == 1) {
+			if (settings["allmodules"]) return true;
+		}
 
 	if (current.room != old.room) {
 
