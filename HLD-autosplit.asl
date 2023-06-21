@@ -232,14 +232,14 @@ startup {
 		{"megahuge", 181},
 		{"flamepit", 183},
 		{"bigbog", 193},
-        {"bogtemple", 194},
+        	{"bogtemple", 194},
 		{"dockslab", 188},
 		{"frogarena", 191},
 		{"eastloop", 198},
 		{"northhall", 86},
 		{"shrinevault", 91},
 		{"birds", 123},
-        {"towerlock", 95},
+        	{"towerlock", 95},
 		{"crusharena", 104},
 		{"dropspiral", 106},
 		{"droparena", 109},
@@ -259,7 +259,7 @@ startup {
 		{"pillarbird", 160},
 		{"cspiral", 161},
 		{"dashmodule", 132}
-	}; /* add new rooms for modules without transitions splits (and make sure this doesn't break transition splits) */
+	};
 }
 
 
@@ -348,8 +348,7 @@ split {
 				
 		/* module transitions */
 		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
-            bool settingvalue = false;
-            settings.TryGetValue(pair.Key, out settingvalue);
+			bool settingvalue = settings.ContainsKey(pair.Key) ? settings[pair.Key] : false;
 			if (settingvalue && old.room == pair.Value && current.room != pair.Value && current.room != 5) return true;
 		}
 
