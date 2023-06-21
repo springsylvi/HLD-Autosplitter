@@ -86,73 +86,140 @@ startup {
 	settings.Add("altarquit", false, "AltarThrone Quitout", "Transitions");
 	settings.SetToolTip("altarquit", "Split when quitting to menu from AltarThrone");
 
-	settings.Add("allmodules", false, "Modules");
-	settings.SetToolTip("allmodules", "Split when activating any module");
+	settings.Add("eastmodules", false, "East Module Activations");
+	settings.Add("watertunnelcl", false, "Water Tunnel Module", "eastmodules");
+	settings.SetToolTip("watertunnelcl", "Split when activating the module in WaterTunnelLAB");
+	settings.Add("megahugecl", false, "Megahuge Lab Module", "eastmodules");
+	settings.SetToolTip("megahugecl", "Split when activating the module in MegaHugeLAB");
+	settings.Add("flamepitcl", false, "Flamepit Lab Module", "eastmodules");
+	settings.SetToolTip("flamepitcl", "Split when activating the module in FlamePitLAB");
+	settings.Add("bigbogcl", false, "Bigbog Lab Module", "eastmodules");
+	settings.SetToolTip("bigbogcl", "Split when activating the module in BigBogLab");
+	settings.Add("bogtemplecl", false, "Bog Temple Module", "eastmodules");
+	settings.SetToolTip("bogtemplecl", "Split when activating the module in BogTempleCamp");
+	settings.Add("dockslabcl", false, "Docks Lab Module", "eastmodules");
+	settings.SetToolTip("dockslabcl", "Split when activating the module in DocksLab");
+	settings.Add("frogarenacl", false, "Frog Arena Module", "eastmodules");
+	settings.SetToolTip("frogarenacl", "Split when activating the module in FrogArena");
+	settings.Add("eastloopcl", false, "East Loop Module", "eastmodules");
+	settings.SetToolTip("eastloopcl", "Split when activating the module in EastLoop");
 
-	settings.Add("eastmodules", false, "East Module Transitions");
-	settings.Add("watertunnel", false, "Water Tunnel Exit", "eastmodules");
+	settings.Add("northmodules", false, "North Module Activations");
+	settings.Add("northhallcl", false, "Dark Room Module", "northmodules");
+	settings.SetToolTip("northhallcl", "Split when activating the module in NorthHall");
+	settings.Add("shrinevaultcl", false, "Shrine Path Module", "northmodules");
+	settings.SetToolTip("shrinevaultcl", "Split when activating the module in ShrinePath2VAULT");
+	settings.Add("birdscl", false, "Birds Module", "northmodules");
+	settings.SetToolTip("birdscl", "Split when activating the module in StairAscent");
+	settings.Add("towerlockcl", false, "Pillar Room Module", "northmodules");
+	settings.SetToolTip("towerlockcl", "Split when activating the module in TowerLock");
+	settings.Add("crusharenacl", false, "Crush Arena Module", "northmodules");
+	settings.SetToolTip("crusharenacl", "Split when activating the module in CrushArena");
+	settings.Add("dropspiralcl", false, "Drop Spiral Module", "northmodules");
+	settings.SetToolTip("dropspiralcl", "Split when activating the module in DropSpiralOpen");
+	settings.Add("droparenacl", false, "Drop Arena Module", "northmodules");
+	settings.SetToolTip("droparenacl", "Split when activating the module in DropArena");
+	settings.Add("altarcl", false, "Cathedral Arena Module", "northmodules");
+	settings.SetToolTip("altarcl", "Split when activating the module in AltarThrone");
+
+	settings.Add("westmodules", false, "West Module Activations");
+	settings.Add("prisonvaultcl", false, "Prison Vault Module", "westmodules");
+	settings.SetToolTip("prisonvaultcl", "Split when activating the module in PrisonHALVAULT");
+	settings.Add("thewoodcl", false, "The Wood Module", "westmodules");
+	settings.SetToolTip("thewoodcl", "Split when activating the module in TheWood");
+	settings.Add("meadowoodcl", false, "Dog Module", "westmodules");
+	settings.SetToolTip("meadowoodcl", "Split when activating the module in MeadowoodCorner");
+	settings.Add("cliffsidecellscl", false, "Cliffside Cells Module", "westmodules");
+	settings.SetToolTip("cliffsidecellscl", "Split when activating the module in CliffsideCellsRedux");
+	settings.Add("prisonhallcl", false, "Prison Hall Module", "westmodules");
+	settings.SetToolTip("prisonhallcl", "Split when activating the module in PrisonHallEnd");
+	settings.Add("thinforestcl", false, "Icex Module", "westmodules");
+	settings.SetToolTip("thinforestcl", "Split when activating the module in ThinForestLowSecret");
+	settings.Add("meadowvaultcl", false, "Meadow Vault Module", "westmodules");
+	settings.SetToolTip("meadowvaultcl", "Split when activating the module in BigMeadowVault");
+	settings.Add("tanukitroublecl", false, "Tanuki Trouble Module", "westmodules");
+	settings.SetToolTip("tanukitroublecl", "Split when activating the module in TanukiTrouble");
+
+	settings.Add("southmodules", false, "South Module Activations");
+	settings.Add("bigonecl", false, "Big One Module", "southmodules");
+	settings.SetToolTip("bigonecl", "Split when activating the module in TABigOne");
+	settings.Add("gateblockcl", false, "Gate Block Module", "southmodules");
+	settings.SetToolTip("gateblockcl", "Split when activating the module in CGateBlock");
+	settings.Add("endhallcl", false, "Bullet Baker Module", "southmodules");
+	settings.SetToolTip("endhallcl", "Split when activating the module in CEndHall");
+	settings.Add("linkupcl", false, "Gauntlet Linkup Modules", "southmodules");
+	settings.SetToolTip("linkupcl", "Split when activating either module in GauntletLinkup"); /* implement special case for this room? */
+	settings.Add("pillarbirdcl", false, "Charles Room Module", "southmodules");
+	settings.SetToolTip("pillarbirdcl", "Split when activating the module in APillarBird");
+	settings.Add("cspiralcl", false, "CSpiral Module", "southmodules");
+	settings.SetToolTip("cspiralcl", "Split when activating the module in CSpiral");
+	settings.Add("dashmodulecl", false, "Dash Challenge Module", "southmodules");
+	settings.SetToolTip("dashmodulecl", "Split when activating the module in Gauntlet_Elevator");
+
+	settings.Add("eastmoduletransitions", false, "East Module Transitions");
+	settings.Add("watertunnel", false, "Water Tunnel Exit", "eastmoduletransitions");
 	settings.SetToolTip("watertunnel", "Split when leaving WaterTunnelLAB");
-	settings.Add("megahuge", false, "Megahuge Lab Exit", "eastmodules");
+	settings.Add("megahuge", false, "Megahuge Lab Exit", "eastmoduletransitions");
 	settings.SetToolTip("megahuge", "Split when leaving MegaHugeLAB");
-	settings.Add("flamepit", false, "Flamepit Lab Exit", "eastmodules");
+	settings.Add("flamepit", false, "Flamepit Lab Exit", "eastmoduletransitions");
 	settings.SetToolTip("flamepit", "Split when leaving FlamePitLAB");
-	settings.Add("bigbog", false, "Bigbog Lab Exit", "eastmodules");
+	settings.Add("bigbog", false, "Bigbog Lab Exit", "eastmoduletransitions");
 	settings.SetToolTip("bigbog", "Split when leaving BigBogLab");
-	settings.Add("dockslab", false, "Docks Lab Exit", "eastmodules");
+	settings.Add("dockslab", false, "Docks Lab Exit", "eastmoduletransitions");
 	settings.SetToolTip("dockslab", "Split when leaving DocksLab");
-	settings.Add("frogarena", false, "Frog Arena Exit", "eastmodules");
+	settings.Add("frogarena", false, "Frog Arena Exit", "eastmoduletransitions");
 	settings.SetToolTip("frogarena", "Split when leaving FrogArena");
-	settings.Add("eastloop", false, "East Loop Exit", "eastmodules");
+	settings.Add("eastloop", false, "East Loop Exit", "eastmoduletransitions");
 	settings.SetToolTip("eastloop", "Split when leaving EastLoop");
 
-	settings.Add("northmodules", false, "North Module Transitions");
-	settings.Add("northhall", false, "Dark Room Exit", "northmodules");
+	settings.Add("northmoduletransitions", false, "North Module Transitions");
+	settings.Add("northhall", false, "Dark Room Exit", "northmoduletransitions");
 	settings.SetToolTip("northhall", "Split when leaving NorthHall");
-	settings.Add("shrinevault", false, "Shrine Path Vault Exit", "northmodules");
+	settings.Add("shrinevault", false, "Shrine Path Vault Exit", "northmoduletransitions");
 	settings.SetToolTip("shrinevault", "Split when leaving ShrinePath2VAULT");
-	settings.Add("birds", false, "Birds Module Exit", "northmodules");
+	settings.Add("birds", false, "Birds Module Exit", "northmoduletransitions");
 	settings.SetToolTip("birds", "Split when leaving StairAscent");
-	settings.Add("crusharena", false, "Crush Arena Exit", "northmodules");
+	settings.Add("crusharena", false, "Crush Arena Exit", "northmoduletransitions");
 	settings.SetToolTip("crusharena", "Split when leaving CrushArena");
-	settings.Add("dropspiral", false, "Drop Spiral Exit", "northmodules");
+	settings.Add("dropspiral", false, "Drop Spiral Exit", "northmoduletransitions");
 	settings.SetToolTip("dropspiral", "Split when leaving DropSpiralOpen");
-	settings.Add("droparena", false, "Drop Arena Exit", "northmodules");
+	settings.Add("droparena", false, "Drop Arena Exit", "northmoduletransitions");
 	settings.SetToolTip("droparena", "Split when leaving DropArena");
-	settings.Add("altar", false, "Cathedral Arena Exit", "northmodules");
+	settings.Add("altar", false, "Cathedral Arena Exit", "northmoduletransitions");
 	settings.SetToolTip("altar", "Split when leaving AltarThrone");
 
-	settings.Add("westmodules", false, "West Module Transitions");
-	settings.Add("prisonvault", false, "Prison Vault Exit", "westmodules");
+	settings.Add("westmoduletransitions", false, "West Module Transitions");
+	settings.Add("prisonvault", false, "Prison Vault Exit", "westmoduletransitions");
 	settings.SetToolTip("prisonvault", "Split when leaving PrisonHALVAULT");
-	settings.Add("thewood", false, "The Wood Exit", "westmodules");
+	settings.Add("thewood", false, "The Wood Exit", "westmoduletransitions");
 	settings.SetToolTip("thewood", "Split when leaving TheWood");
-	settings.Add("meadowood", false, "Dog Module Exit", "westmodules");
+	settings.Add("meadowood", false, "Dog Module Exit", "westmoduletransitions");
 	settings.SetToolTip("meadowood", "Split when leaving MeadowoodCorner");
-	settings.Add("cliffsidecells", false, "Cliffside Cells Exit", "westmodules");
+	settings.Add("cliffsidecells", false, "Cliffside Cells Exit", "westmoduletransitions");
 	settings.SetToolTip("cliffsidecells", "Split when leaving CliffsideCellsRedux");
-	settings.Add("prisonhall", false, "Prison Hall Exit", "westmodules");
+	settings.Add("prisonhall", false, "Prison Hall Exit", "westmoduletransitions");
 	settings.SetToolTip("prisonhall", "Split when leaving PrisonHallEnd");
-	settings.Add("thinforest", false, "Icex Module Exit", "westmodules");
+	settings.Add("thinforest", false, "Icex Module Exit", "westmoduletransitions");
 	settings.SetToolTip("thinforest", "Split when leaving ThinForestLowSecret");
-	settings.Add("meadowvault", false, "Meadow Vault Exit", "westmodules");
+	settings.Add("meadowvault", false, "Meadow Vault Exit", "westmoduletransitions");
 	settings.SetToolTip("meadowvault", "Split when leaving BigMeadowVault");
-	settings.Add("tanukitrouble", false, "Tanuki Trouble Exit", "westmodules");
+	settings.Add("tanukitrouble", false, "Tanuki Trouble Exit", "westmoduletransitions");
 	settings.SetToolTip("tanukitrouble", "Split when leaving TanukiTrouble");
 
-	settings.Add("southmodules", false, "South Module Transitions");
-	settings.Add("bigone", false, "Big One Exit", "southmodules");
+	settings.Add("southmoduletransitions", false, "South Module Transitions");
+	settings.Add("bigone", false, "Big One Exit", "southmoduletransitions");
 	settings.SetToolTip("bigone", "Split when leaving TABigOne");
-	settings.Add("gateblock", false, "Gate Block Exit", "southmodules");
+	settings.Add("gateblock", false, "Gate Block Exit", "southmoduletransitions");
 	settings.SetToolTip("gateblock", "Split when leaving CGateBlock");
-	settings.Add("endhall", false, "Baker Module Exit", "southmodules");
+	settings.Add("endhall", false, "Baker Module Exit", "southmoduletransitions");
 	settings.SetToolTip("endhall", "Split when leaving CEndHall");
-	settings.Add("linkup", false, "Gauntlet Linkup Exit", "southmodules");
+	settings.Add("linkup", false, "Gauntlet Linkup Exit", "southmoduletransitions");
 	settings.SetToolTip("linkup", "Split when leaving GauntletLinkup");
-	settings.Add("pillarbird", false, "Charles Room Exit", "southmodules");
+	settings.Add("pillarbird", false, "Charles Room Exit", "southmoduletransitions");
 	settings.SetToolTip("pillarbird", "Split when leaving APillarBird");
-	settings.Add("cspiral", false, "CSpiral Exit", "southmodules");
+	settings.Add("cspiral", false, "CSpiral Exit", "southmoduletransitions");
 	settings.SetToolTip("cspiral", "Split when leaving CSpiral");
-	settings.Add("dashmodule", false, "Dash Challenge Exit", "southmodules");
+	settings.Add("dashmodule", false, "Dash Challenge Exit", "southmoduletransitions");
 	settings.SetToolTip("dashmodule", "Split when leaving Gauntlet_Elevator");
 
 	settings.Add("pillars", false, "Pillar Transitions");
@@ -165,12 +232,14 @@ startup {
 		{"megahuge", 181},
 		{"flamepit", 183},
 		{"bigbog", 193},
+        {"bogtemple", 194},
 		{"dockslab", 188},
 		{"frogarena", 191},
 		{"eastloop", 198},
 		{"northhall", 86},
 		{"shrinevault", 91},
 		{"birds", 123},
+        {"towerlock", 95},
 		{"crusharena", 104},
 		{"dropspiral", 106},
 		{"droparena", 109},
@@ -190,7 +259,7 @@ startup {
 		{"pillarbird", 160},
 		{"cspiral", 161},
 		{"dashmodule", 132}
-	};
+	}; /* add new rooms for modules without transitions splits (and make sure this doesn't break transition splits) */
 }
 
 
@@ -209,7 +278,9 @@ split {
 	}
 
 	if (current.moduleCount != old.moduleCount && current.moduleCount == 1) {
-			if (settings["allmodules"]) return true;
+            foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
+                if (settings[pair.Key + "cl"] && current.room == pair.Value) return true;
+            }
 		}
 
 	if (current.room != old.room) {
@@ -277,7 +348,9 @@ split {
 				
 		/* module transitions */
 		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
-			if (settings[pair.Key] && old.room == pair.Value && current.room != pair.Value && current.room != 5) return true;
+            bool settingvalue = false;
+            settings.TryGetValue(pair.Key, out settingvalue);
+			if (settingvalue && old.room == pair.Value && current.room != pair.Value && current.room != 5) return true;
 		}
 
 		/* west pillar */
