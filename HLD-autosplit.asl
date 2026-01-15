@@ -69,6 +69,8 @@ startup {
 	settings.SetToolTip("ngstart", "Start the timer on creating a new file (any mode, including boss rush)");
 	settings.Add("hordestart", false, "Horde Start", "start");
 	settings.SetToolTip("hordestart", "Start the timer on entering any horde arena");
+	settings.Add("anyload", false, "Any Transition", "start");
+	settings.SetToolTip("anyload", "Start the timer on any transition");
 
 	settings.Add("Alt Drifter", false);
 	settings.SetToolTip("Alt Drifter", "Final split on entering the credits");
@@ -226,20 +228,19 @@ startup {
 	settings.Add("westpillar", false, "West Pillar Exit", "pillars");
 	settings.SetToolTip("westpillar", "Split when leaving TowerEnter");
 
-	vars.mre = false;
 	vars.modulerooms = new Dictionary<string, int>() {
 		{"watertunnel", 174},
 		{"megahuge", 181},
 		{"flamepit", 183},
 		{"bigbog", 193},
-        	{"bogtemple", 194},
+        {"bogtemple", 194},
 		{"dockslab", 188},
 		{"frogarena", 191},
 		{"eastloop", 198},
 		{"northhall", 86},
 		{"shrinevault", 91},
 		{"birds", 123},
-        	{"towerlock", 95},
+        {"towerlock", 95},
 		{"crusharena", 104},
 		{"dropspiral", 106},
 		{"droparena", 109},
@@ -262,11 +263,17 @@ startup {
 	};
 }
 
+onStart {
+	vars.mre = false;
+	vars.modulestate = false;
+}
 
 start {
 	if (current.gameState == 5 && old.gameState == 0 && settings["ngstart"]) return true;
 
 	if (current.room >= 73 && current.room <= 77 && old.room != current.room && settings["hordestart"]) return true;
+
+	if (current.isLoading == 1 && settings["anyload"]) return true;
 }
 
 
@@ -349,14 +356,20 @@ split {
 		/* module transitions */
 		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
 			bool settingvalue = settings.ContainsKey(pair.Key) ? settings[pair.Key] : false;
-			if (settingvalue && old.room == pair.Value && current.room != pair.Value && current.room != 5) return true;
+			if (settingvalue && old.room == pair.Value && current.room != pair.Value && vars.modulestate == true && current.room != 5) return true;
 		}
+		/* reset module state after a transition */
+		if (current.room != old.room) vars.modulestate = false;
 
 		/* west pillar */
 		if (old.room == 246 && current.room != 246) {
 			if (settings["westpillar"]) return true;
 		}
 	}
+}
+
+update {
+	if (current.moduleCount != old.moduleCount && current.moduleCount == 1) vars.modulestate = true;
 }
 
 isLoading {
