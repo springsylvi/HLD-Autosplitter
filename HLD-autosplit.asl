@@ -78,6 +78,7 @@ startup {
 	settings.SetToolTip("horde", "Split on beating the 10th wave in any horde mode arena");
 	settings.Add("Rooms", false);
 	settings.SetToolTip("Rooms", "Split on every room transition");
+
 	settings.Add("Transitions", false);
 	settings.Add("intro", false, "Intro Done", "Transitions");
 	settings.SetToolTip("intro", "Split when completing the intro area");
@@ -87,6 +88,12 @@ startup {
 	settings.SetToolTip("lab", "Split when using the elevator after MeltyMashArena");
 	settings.Add("altarquit", false, "AltarThrone Quitout", "Transitions");
 	settings.SetToolTip("altarquit", "Split when quitting to menu from AltarThrone");
+	settings.Add("looplab", false, "Loop Lab Elevator", "Transitions");
+	settings.SetToolTip("looplab", "Split when using the elevator after LoopLAB");
+	settings.Add("prison1", false, "Prison 1 Exit", "Transitions");
+	settings.SetToolTip("prison1", "Split when leaving PrisonHAL");
+	settings.Add("southelevator", false, "South Elevator", "Transitions");
+	settings.SetToolTip("southelevator", "Split when taking an elevator from the main south room for the first time");
 
 	settings.Add("eastmodules", false, "East Module Activations");
 	settings.Add("watertunnelcl", false, "Water Tunnel Module", "eastmodules");
@@ -266,6 +273,7 @@ startup {
 onStart {
 	vars.mre = false;
 	vars.modulestate = false;
+	vars.southelevator = false;
 }
 
 start {
@@ -352,6 +360,29 @@ split {
 				return true;
 			}
 		}
+
+		/* loop lab elevator */
+		if (current.room == 79 && old.room == 199) {
+			if (settings["looplab"]) {
+				return true;
+			}
+		}
+
+		/* prison 1 exit */
+		if (current.room != old.room && old.room == 227) {
+			if (settings["prison1"]) {
+				return true;
+			}
+		}
+
+		/* first south elevator */
+		if (current.room == 79 && old.room == 130) {
+			if (settings["southelevator"] && !vars.southelevator) {
+				vars.southelevator = true;
+				return true;
+			}
+		}
+
 				
 		/* module transitions */
 		foreach (KeyValuePair<string, int> pair in vars.modulerooms) {
