@@ -299,7 +299,7 @@ split {
 		}
 
 
-		if (current.room == 61 && (old.room < 60 || old.room > 80)) {
+		if (current.room == 61 && (old.room < 53 || old.room > 80)) {
 			if (settings["warptown"]) return true;
 		}
 		if (current.room == 175 && (old.room < 172 || old.room > 200)) {
