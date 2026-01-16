@@ -238,6 +238,8 @@ startup {
 	settings.Add("pillars", false, "Pillar Transitions");
 	settings.Add("westpillar", false, "West Pillar Exit", "pillars");
 	settings.SetToolTip("westpillar", "Split when leaving TowerEnter");
+	settings.Add("southpillar", false, "South Pillar Warp", "pillars");
+	settings.SetToolTip("southpillar", "Split when warping from TowerSouth to TowerSouth");
 
 	vars.modulerooms = new Dictionary<string, int>() {
 		{"watertunnel", 174},
@@ -400,6 +402,10 @@ split {
 		if (old.room == 246 && current.room != 246) {
 			if (settings["westpillar"]) return true;
 		}
+	}
+
+	if (current.isLoading == 1 && old.isLoading == 0 && current.room == old.room && current.room == 130) {
+		if (settings["southpillar"]) return true;
 	}
 }
 
